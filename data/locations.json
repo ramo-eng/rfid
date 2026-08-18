@@ -1,0 +1,10 @@
+{
+  "locations": [
+    {
+      "slug": "demo-cafe",
+      "name": "Demo Cafe",
+      "address": "123 Main Street",
+      "googlePlaceId": "ChIJj61dQgK6j4AR4GeTYWZsKWw"
+    }
+  ]
+}

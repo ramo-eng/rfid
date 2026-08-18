@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NFC review links</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <p class="kicker">Shop setup</p>
+      <h1>NFC review pages</h1>
+      <p>
+        Create a page for each shop, then write that URL onto an NFC/RFID tag.
+        When a customer taps the tag, their phone opens the page.
+      </p>
+
+      <form id="form">
+        <label for="name">Shop name</label>
+        <input id="name" name="name" required placeholder="Sunset Bistro" />
+
+        <label for="address">Address (optional)</label>
+        <input id="address" name="address" placeholder="12 Oak Avenue" />
+
+        <label for="googlePlaceId">Google Place ID</label>
+        <input id="googlePlaceId" name="googlePlaceId" required placeholder="ChIJ..." />
+        <p class="hint">Find it with Google’s Place ID finder, then paste it here.</p>
+
+        <button class="btn" type="submit">Save shop</button>
+      </form>
+      <p id="status" class="hint"></p>
+    </section>
+
+    <section class="list" id="list"></section>
+  </main>
+  <script src="/admin.js"></script>
+</body>
+</html>
