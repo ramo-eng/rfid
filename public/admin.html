@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Program RFID review tags</title>
+  <script>
+    window.APP_BASE = (function () {
+      const parts = location.pathname.split("/").filter(Boolean);
+      if (location.hostname.endsWith("github.io") && parts[0]) return "/" + parts[0] + "/";
+      return "/";
+    })();
+    function appUrl(path) { return window.APP_BASE + String(path || "").replace(/^\//, ""); }
+    document.write('<link rel="stylesheet" href="' + appUrl("styles.css") + '">');
+  </script>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <p class="kicker">RFID / NFC</p>
+      <h1>Put the shop on the tag</h1>
+      <p>
+        Each tag carries the Google Place ID in its URL. When a phone taps the tag, it opens this server with that place already selected. Different shops get different tags.
+      </p>
+
+      <form id="form">
+        <label for="name">Shop name (shown on the phone)</label>
+        <input id="name" name="name" placeholder="Sunset Bistro" />
+
+        <label for="address">Address (optional)</label>
+        <input id="address" name="address" placeholder="12 Oak Avenue" />
+
+        <label for="placeId">Google Place ID</label>
+        <input id="placeId" name="placeId" required placeholder="ChIJ..." />
+        <p class="hint">Find it with Google’s Place ID finder. This value is written onto the RFID tag.</p>
+
+        <button class="btn" type="submit">Build RFID URL</button>
+      </form>
+      <p id="status" class="hint"></p>
+    </section>
+
+    <section class="card loc" id="output" hidden style="margin-top:16px">
+      <h2>Write this URL on the tag</h2>
+      <p><a id="output-url" href="#"></a></p>
+      <button class="btn" id="copy" type="button">Copy URL</button>
+      <a class="btn secondary" id="preview" href="#" style="display:block; text-align:center; text-decoration:none; margin-top:12px">Preview as if the tag was tapped</a>
+    </section>
+  </main>
+  <script>
+    document.write('<script src="' + appUrl("place.js") + '"><\/script>');
+    document.write('<script src="' + appUrl("app.js") + '"><\/script>');
+    document.write('<script src="' + appUrl("admin.js") + '"><\/script>');
+  </script>
+</body>
+</html>
