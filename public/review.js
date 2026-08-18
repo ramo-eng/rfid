@@ -1,6 +1,6 @@
-const slug = shopSlugFromLocation();
 const nameEl = document.getElementById("shop-name");
 const addressEl = document.getElementById("shop-address");
+const placeIdEl = document.getElementById("place-id");
 const labelEl = document.getElementById("star-label");
 const textEl = document.getElementById("review-text");
 const continueBtn = document.getElementById("continue");
@@ -56,29 +56,20 @@ continueBtn.addEventListener("click", async () => {
   window.location.href = googleUrl;
 });
 
-async function load() {
-  if (!slug) {
-    nameEl.textContent = "Missing shop link";
-    setStatus("This URL needs a shop slug, for example /r/demo-cafe", true);
+function load() {
+  const place = parsePlaceFromHref(location.href);
+  if (!place.placeId) {
+    nameEl.textContent = "No place on this tag";
+    setStatus("The RFID/NFC tag must include a Google Place ID in the URL, for example /r/?placeid=ChIJ...&name=Cafe", true);
     return;
   }
 
-  const data = await fetchLocations();
-  const location = (data.locations || []).find((item) => item.slug === slug);
-  if (!location) {
-    nameEl.textContent = "Shop not found";
-    setStatus("Unknown shop", true);
-    return;
-  }
-
-  nameEl.textContent = location.name;
-  addressEl.textContent = location.address || "";
-  googleUrl = googleReviewUrl(location.googlePlaceId);
-  document.title = `Review ${location.name}`;
+  nameEl.textContent = place.name || "This shop";
+  addressEl.textContent = place.address || "";
+  placeIdEl.textContent = `Place from RFID: ${place.placeId}`;
+  googleUrl = googleReviewUrl(place.placeId);
+  document.title = `Review ${place.name || "this shop"}`;
   renderStars();
 }
 
-load().catch(() => {
-  nameEl.textContent = "Could not load shop";
-  setStatus("Check the server and try again.", true);
-});
+load();

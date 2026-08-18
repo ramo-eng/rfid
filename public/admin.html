@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NFC review links</title>
+  <title>Program RFID review tags</title>
   <script>
     window.APP_BASE = (function () {
       const parts = location.pathname.split("/").filter(Boolean);
@@ -17,32 +17,37 @@
 <body>
   <main class="wrap">
     <section class="card">
-      <p class="kicker">Shop setup</p>
-      <h1>NFC review pages</h1>
+      <p class="kicker">RFID / NFC</p>
+      <h1>Put the shop on the tag</h1>
       <p>
-        Create a page for each shop, then write that URL onto an NFC/RFID tag.
-        When a customer taps the tag, their phone opens the page.
+        Each tag carries the Google Place ID in its URL. When a phone taps the tag, it opens this server with that place already selected. Different shops get different tags.
       </p>
 
       <form id="form">
-        <label for="name">Shop name</label>
-        <input id="name" name="name" required placeholder="Sunset Bistro" />
+        <label for="name">Shop name (shown on the phone)</label>
+        <input id="name" name="name" placeholder="Sunset Bistro" />
 
         <label for="address">Address (optional)</label>
         <input id="address" name="address" placeholder="12 Oak Avenue" />
 
-        <label for="googlePlaceId">Google Place ID</label>
-        <input id="googlePlaceId" name="googlePlaceId" required placeholder="ChIJ..." />
-        <p class="hint">Find it with Google’s Place ID finder, then paste it here.</p>
+        <label for="placeId">Google Place ID</label>
+        <input id="placeId" name="placeId" required placeholder="ChIJ..." />
+        <p class="hint">Find it with Google’s Place ID finder. This value is written onto the RFID tag.</p>
 
-        <button class="btn" type="submit">Save shop</button>
+        <button class="btn" type="submit">Build RFID URL</button>
       </form>
       <p id="status" class="hint"></p>
     </section>
 
-    <section class="list" id="list"></section>
+    <section class="card loc" id="output" hidden style="margin-top:16px">
+      <h2>Write this URL on the tag</h2>
+      <p><a id="output-url" href="#"></a></p>
+      <button class="btn" id="copy" type="button">Copy URL</button>
+      <a class="btn secondary" id="preview" href="#" style="display:block; text-align:center; text-decoration:none; margin-top:12px">Preview as if the tag was tapped</a>
+    </section>
   </main>
   <script>
+    document.write('<script src="' + appUrl("place.js") + '"><\/script>');
     document.write('<script src="' + appUrl("app.js") + '"><\/script>');
     document.write('<script src="' + appUrl("admin.js") + '"><\/script>');
   </script>

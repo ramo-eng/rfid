@@ -17,9 +17,10 @@
 <body>
   <main class="wrap">
     <section class="card">
-      <p class="kicker">Tap to review</p>
+      <p class="kicker">From the RFID tag</p>
       <h1 id="shop-name">Loading…</h1>
       <p id="shop-address"></p>
+      <p id="place-id" class="hint"></p>
       <p>How was your visit? Pick a rating, write your own review, then continue to Google.</p>
 
       <div class="stars" role="radiogroup" aria-label="Star rating">
@@ -42,6 +43,7 @@
     </section>
   </main>
   <script>
+    document.write('<script src="' + appUrl("place.js") + '"><\/script>');
     document.write('<script src="' + appUrl("app.js") + '"><\/script>');
     document.write('<script src="' + appUrl("review.js") + '"><\/script>');
   </script>

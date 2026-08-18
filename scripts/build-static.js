@@ -1,6 +1,5 @@
 const fs = require("fs");
 const path = require("path");
-const { listLocations } = require("../lib/locations");
 
 const ROOT = path.join(__dirname, "..");
 const PUBLIC = path.join(ROOT, "public");
@@ -18,17 +17,13 @@ function resetDir(dir) {
 
 function build() {
   resetDir(OUT);
-  for (const file of ["review.html", "admin.html", "styles.css", "app.js", "review.js", "admin.js", "locations.json"]) {
+  for (const file of ["review.html", "admin.html", "styles.css", "app.js", "place.js", "review.js", "admin.js"]) {
     copyFile(path.join(PUBLIC, file), path.join(OUT, file));
   }
   copyFile(path.join(PUBLIC, "admin.html"), path.join(OUT, "index.html"));
+  copyFile(path.join(PUBLIC, "review.html"), path.join(OUT, "r", "index.html"));
   fs.writeFileSync(path.join(OUT, ".nojekyll"), "");
   fs.writeFileSync(path.join(OUT, "404.html"), fs.readFileSync(path.join(PUBLIC, "review.html")));
-
-  for (const location of listLocations()) {
-    const dest = path.join(OUT, "r", location.slug, "index.html");
-    copyFile(path.join(PUBLIC, "review.html"), dest);
-  }
 }
 
 build();
