@@ -21,7 +21,7 @@
       <h1 id="shop-name">Loading…</h1>
       <p id="shop-address"></p>
       <p id="place-id" class="hint"></p>
-      <p>How was your visit? Pick a rating, write your own review, then continue to Google.</p>
+      <p>How was your visit? Pick a rating and write your review here. We keep it on this phone and copy it when you continue, so you can paste it into Google.</p>
 
       <div class="stars" role="radiogroup" aria-label="Star rating">
         <button class="star" type="button" data-stars="1" aria-label="1 star">★</button>
@@ -35,15 +35,16 @@
       <label for="review-text">Your review</label>
       <textarea id="review-text" maxlength="4000" placeholder="Write what you actually experienced. Google requires this to be your own words."></textarea>
 
-      <button class="btn" id="continue" type="button" disabled>Continue to Google</button>
+      <button class="btn" id="continue" type="button" disabled>Copy review and open Google</button>
       <p class="notice">
-        Google does not allow apps to fill or post reviews for you. This page opens Google’s official review screen on your phone. Paste your text there if you copied it, choose the same star rating, and tap Post.
+        Google does not let other sites type into its review box. Your words stay on this page, then we copy them. On Google, tap the review box, paste, match the same stars, and tap Post.
       </p>
       <p id="status" class="hint"></p>
     </section>
   </main>
   <script>
     document.write('<script src="' + appUrl("place.js") + '"><\/script>');
+    document.write('<script src="' + appUrl("draft.js") + '"><\/script>');
     document.write('<script src="' + appUrl("app.js") + '"><\/script>');
     document.write('<script src="' + appUrl("review.js") + '"><\/script>');
   </script>

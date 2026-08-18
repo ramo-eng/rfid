@@ -4,6 +4,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { spawnSync } = require("node:child_process");
 const { googleReviewUrl, parsePlaceFromHref, buildNfcPath } = require("../public/place.js");
+const { draftStorageKey, serializeDraft, parseDraft } = require("../public/draft.js");
 
 test("googleReviewUrl uses the official write-review place id link", () => {
   assert.equal(
@@ -40,4 +41,13 @@ test("static build writes the RFID review route", () => {
   assert.equal(fs.existsSync(path.join(dist, ".nojekyll")), true);
   assert.equal(fs.existsSync(path.join(dist, "r", "index.html")), true);
   assert.equal(fs.existsSync(path.join(dist, "place.js")), true);
+  assert.equal(fs.existsSync(path.join(dist, "draft.js")), true);
+});
+
+test("review drafts round-trip through local storage JSON", () => {
+  assert.equal(draftStorageKey("ChIJ123"), "nfc-review-draft:ChIJ123");
+  const saved = serializeDraft({ stars: 4, text: "Great coffee" });
+  const loaded = parseDraft(saved);
+  assert.equal(loaded.stars, 4);
+  assert.equal(loaded.text, "Great coffee");
 });

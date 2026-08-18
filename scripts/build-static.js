@@ -17,7 +17,7 @@ function resetDir(dir) {
 
 function build() {
   resetDir(OUT);
-  for (const file of ["review.html", "admin.html", "styles.css", "app.js", "place.js", "review.js", "admin.js"]) {
+  for (const file of ["review.html", "admin.html", "styles.css", "app.js", "place.js", "draft.js", "review.js", "admin.js"]) {
     copyFile(path.join(PUBLIC, file), path.join(OUT, file));
   }
   copyFile(path.join(PUBLIC, "admin.html"), path.join(OUT, "index.html"));
