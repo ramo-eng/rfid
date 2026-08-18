@@ -106,8 +106,9 @@ const server = http.createServer(async (req, res) => {
 });
 
 if (require.main === module) {
-  server.listen(PORT, () => {
-    console.log(`NFC review server listening on http://localhost:${PORT}`);
+  const host = process.env.HOST || "0.0.0.0";
+  server.listen(PORT, host, () => {
+    console.log(`NFC review server listening on http://${host}:${PORT}`);
   });
 }
 

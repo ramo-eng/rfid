@@ -1,4 +1,4 @@
-const slug = decodeURIComponent(location.pathname.replace(/^\/r\//, "").replace(/\/$/, ""));
+const slug = shopSlugFromLocation();
 const nameEl = document.getElementById("shop-name");
 const addressEl = document.getElementById("shop-address");
 const labelEl = document.getElementById("star-label");
@@ -16,7 +16,7 @@ const labels = {
 };
 
 let selectedStars = 0;
-let googleReviewUrl = "";
+let googleUrl = "";
 
 function setStatus(message, isError = false) {
   statusEl.textContent = message;
@@ -31,7 +31,7 @@ function renderStars() {
     button.setAttribute("aria-pressed", String(on && value === selectedStars));
   });
   labelEl.textContent = selectedStars ? labels[selectedStars] : "Select a rating";
-  continueBtn.disabled = !selectedStars || !googleReviewUrl;
+  continueBtn.disabled = !selectedStars || !googleUrl;
 }
 
 starButtons.forEach((button) => {
@@ -53,7 +53,7 @@ continueBtn.addEventListener("click", async () => {
   } else {
     setStatus("Opening Google. Write your review there, choose your stars, then tap Post.");
   }
-  window.location.href = googleReviewUrl;
+  window.location.href = googleUrl;
 });
 
 async function load() {
@@ -63,18 +63,18 @@ async function load() {
     return;
   }
 
-  const response = await fetch(`/api/locations/${encodeURIComponent(slug)}`);
-  const data = await response.json();
-  if (!response.ok) {
+  const data = await fetchLocations();
+  const location = (data.locations || []).find((item) => item.slug === slug);
+  if (!location) {
     nameEl.textContent = "Shop not found";
-    setStatus(data.error || "Unknown shop", true);
+    setStatus("Unknown shop", true);
     return;
   }
 
-  nameEl.textContent = data.location.name;
-  addressEl.textContent = data.location.address || "";
-  googleReviewUrl = data.googleReviewUrl;
-  document.title = `Review ${data.location.name}`;
+  nameEl.textContent = location.name;
+  addressEl.textContent = location.address || "";
+  googleUrl = googleReviewUrl(location.googlePlaceId);
+  document.title = `Review ${location.name}`;
   renderStars();
 }
 

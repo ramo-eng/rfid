@@ -4,7 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NFC review links</title>
-  <link rel="stylesheet" href="/styles.css" />
+  <script>
+    window.APP_BASE = (function () {
+      const parts = location.pathname.split("/").filter(Boolean);
+      if (location.hostname.endsWith("github.io") && parts[0]) return "/" + parts[0] + "/";
+      return "/";
+    })();
+    function appUrl(path) { return window.APP_BASE + String(path || "").replace(/^\//, ""); }
+    document.write('<link rel="stylesheet" href="' + appUrl("styles.css") + '">');
+  </script>
 </head>
 <body>
   <main class="wrap">
@@ -34,6 +42,9 @@
 
     <section class="list" id="list"></section>
   </main>
-  <script src="/admin.js"></script>
+  <script>
+    document.write('<script src="' + appUrl("app.js") + '"><\/script>');
+    document.write('<script src="' + appUrl("admin.js") + '"><\/script>');
+  </script>
 </body>
 </html>
